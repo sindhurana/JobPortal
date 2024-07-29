@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { validate } from "node-cron";
 import validator from "validator";
+import jwt from "jsonwebtoken"
 
 
 const userSchema=new mongoose.Schema({
@@ -32,7 +32,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true,
         minLength:[8,"Password must be 8 characters."],
-        
+        select:false
     },
     resume:{
         public_id:String,
@@ -50,5 +50,9 @@ const userSchema=new mongoose.Schema({
         default:Date.now
     }
 });
+
+userSchema.methods.getJWTToken=function (){
+return jwt.sign({id:this._id},process.env.JWT_SECRET_KEY,{expiresIn:process.env.JWT_EXPIRE})
+}
 
 export const User=mongoose.model("User",userSchema);
