@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import cloudinary from "cloudinary"
 import fileUpload from "express-fileupload";
 import { userRouter } from "./routes/user.route.js";
+import { jobRouter } from "./routes/job.route.js";
 
 config();
 
@@ -36,7 +37,8 @@ app.use(fileUpload({
     tempFileDir:"/tmp/"
 }))
 
-app.use("/api/user",userRouter)
+app.use("/api/user",userRouter);
+app.use("/api/job",jobRouter);
 
 
 app.listen(4000,()=>{
