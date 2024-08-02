@@ -8,6 +8,8 @@ import cloudinary from "cloudinary"
 import fileUpload from "express-fileupload";
 import { userRouter } from "./routes/user.route.js";
 import { jobRouter } from "./routes/job.route.js";
+import applicationRouter from "./routes/application.route.js";
+import { newsLetterCron } from "./automation/newsLetterCron.js";
 
 config();
 
@@ -39,8 +41,9 @@ app.use(fileUpload({
 
 app.use("/api/user",userRouter);
 app.use("/api/job",jobRouter);
+app.use("/api/application",applicationRouter);
 
-
+newsLetterCron();
 app.listen(4000,()=>{
     console.log(`Server listening at PORT 4000`)
     connectToMongoDB();

@@ -1,7 +1,7 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { ErrorHandler } from "../middlewares/errorMiddleware.js";
 import { Job } from "../models/Job.model.js";
-import { User } from "../models/user.model.js";
+
 
 export const postJob=catchAsyncErrors(async(req,res,next)=>{
  const {
