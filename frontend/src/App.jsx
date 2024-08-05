@@ -1,4 +1,5 @@
 import React from 'react'
+import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -10,7 +11,7 @@ import PostApplication from './pages/PostApplication'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
-import "bootstrap/dist/bootstrap.min.css"
+
 
 function App() {
 
