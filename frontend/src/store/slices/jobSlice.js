@@ -17,7 +17,7 @@ const jobSlice=createSlice({
         state.error=null;
      },
      successForAllJobs(state,action){
-        state.loading=true;
+        state.loading=false;
         state.jobs=action.payload;
         state.error=null;
      },
@@ -58,10 +58,10 @@ export const fetchJobs=(location,jobNiche,searchKeyWord="")=>async(dispatch)=>{
       queryParams.push(`jobNiche=${jobNiche}`);
    }
 
-   link=queryParams.join("&");
+   link+=queryParams.join("&");
 
    const response =await axios.get(link,{withCredentials:true});
-
+   console.log(response)
    dispatch(jobSlice.actions.successForAllJobs(response.data.jobs));
    dispatch(jobSlice.actions.clearAllErrors());
 
