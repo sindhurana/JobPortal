@@ -34,6 +34,28 @@ const userSlice=createSlice({
             state.error=action.payload;
             state.message=null;            
         },
+        loginRequest(state,action){
+            state.loading=true;
+            state.isAuthenticated=false;
+            state.user={}
+            state.error=null;
+            state.message=null;
+           },
+           loginSuccess(state,action){
+               state.loading=false;
+               state.isAuthenticated=true;
+               state.user=action.payload.user;
+               state.error=null;
+               state.message=action.payload.message
+   
+           },
+           loginfailure(state,action){
+               state.loading=false;
+               state.isAuthenticated=false;
+               state.user={}
+               state.error=action.payload;
+               state.message=null;            
+           },
         clearAllErrors(state){
             state.error=null;
             state.user=state.user;
@@ -55,12 +77,35 @@ try {
 
     
 } catch (error) {
-    dispatch(userSlice.actions.registerfailure());
+    dispatch(userSlice.actions.registerfailure(error.response.data.message));
 }
 
 }
 
-export const clearAllUserErrors=(dispatch)=>{
+
+export const login=(data)=>async(dispatch)=>{
+dispatch(userSlice.actions.loginRequest());
+
+try {
+
+    const response=await axios.post("http://localhost:4000/api/user/login",data,{withCredentials:true,
+        headers:{
+            "content-type":"application/json"
+        }
+    }   
+    );
+   dispatch(userSlice.actions.loginSuccess(response.data));
+   dispatch(userSlice.actions.clearAllErrors());
+
+    
+} catch (error) {
+    console.log(error)
+    dispatch(userSlice.actions.loginfailure(error.response.data.message));
+    
+}
+}
+
+export const clearAllUserErrors=()=>(dispatch)=>{
 dispatch(userSlice.actions.clearAllErrors());
 }
 

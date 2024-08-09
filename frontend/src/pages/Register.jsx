@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import userSlice, { clearAllUserErrors, register } from '../store/slices/userSlice';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { FaRegAddressCard } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 
@@ -52,7 +52,7 @@ export default function Register() {
 
     useEffect(() => {
         if (error) {
-            toast.error("error");
+            toast.error(error);
             dispatch(clearAllUserErrors());
         }
 
@@ -97,7 +97,7 @@ export default function Register() {
 
                                 <label>Phone</label>
                                 <div>
-                                    <input type='number' placeholder='Your phone number '
+                                    <input type='text' placeholder='Your phone number '
                                         value={phone} onChange={e => setPhone(e.target.value)} />
                                 </div>
 
@@ -118,7 +118,7 @@ export default function Register() {
                             role === "Job Seeker" && (<>
                                 <label>Your First Niche</label>
                                 <div>
-                                    <select value={firstNiche}> onChange={e => e.setFirstNiche(e.target.value)}
+                                    <select value={firstNiche} onChange={e => setFirstNiche(e.target.value)}>
                                         <option>Your Niche</option>
                                         {jobNiches.map((niche, index) => {
                                             return (
@@ -130,7 +130,7 @@ export default function Register() {
 
                                 <label>Your Second Niche</label>
                                 <div>
-                                    <select value={secondNiche}> onChange={e => e.setSecondNiche(e.target.value)}
+                                    <select value={secondNiche} onChange={e => setSecondNiche(e.target.value)}>
                                         <option>Your Niche</option>
                                         {jobNiches.map((niche, index) => {
                                             return (
@@ -142,7 +142,7 @@ export default function Register() {
 
                                 <label>Your Third Niche</label>
                                 <div>
-                                    <select value={thirdNiche}> onChange={e => e.setThirdNiche(e.target.value)}
+                                    <select value={thirdNiche} onChange={e => setThirdNiche(e.target.value)}>
                                         <option>Your Niche</option>
                                         {jobNiches.map((niche, index) => {
                                             return (
@@ -171,6 +171,7 @@ export default function Register() {
                         <Link to="/login" >Login Now</Link>
                     </form>
                 </div>
+                <ToastContainer position='top-right' theme='dark' />
             </section >
         </>
     )
