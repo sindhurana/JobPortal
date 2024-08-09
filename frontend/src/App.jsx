@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -14,9 +14,17 @@ import NotFound from './pages/NotFound'
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux'
+import { getUser } from './store/slices/userSlice'
 
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [])
 
   return (
     <>

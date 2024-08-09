@@ -56,6 +56,34 @@ const userSlice=createSlice({
                state.error=action.payload;
                state.message=null;            
            },
+           fetchUserRequest(state,action){
+            state.loading=true;
+            state.isAuthenticated=false;
+            state.user={},
+            state.error=null
+           },
+           fetchUserSuccess(state,action){
+            state.loading=false;
+            state.isAuthenticated=true;
+            state.user=action.payload,
+            state.error=null
+           },
+           fetchUserFailure(state,action){
+            state.loading=false;
+            state.isAuthenticated=false;
+            state.user={},
+            state.error=action.payload
+           },
+           logoutSuccess(state,action){
+            state.isAuthenticated=false;
+            state.user={};
+            state.error=null;
+           },
+           logoutFailure(){
+            state.isAuthenticated=state.isAuthenticated;
+            state.user=state.user;
+            state.error=action.payload;
+           },
         clearAllErrors(state){
             state.error=null;
             state.user=state.user;
@@ -99,11 +127,49 @@ try {
 
     
 } catch (error) {
-    console.log(error)
+    
     dispatch(userSlice.actions.loginfailure(error.response.data.message));
     
 }
 }
+
+export const getUser=()=>async(dispatch)=>{
+dispatch(userSlice.actions.fetchUserRequest());
+try {
+
+    const response=await axios.get("http://localhost:4000/api/user/getUser",{withCredentials:true,
+            }   
+    );
+   dispatch(userSlice.actions.fetchUserSuccess(response.data));
+   dispatch(userSlice.actions.clearAllErrors());
+
+    
+} catch (error) {
+    
+    dispatch(userSlice.actions.fetchUserFailure(error.response.data.message));
+    
+}
+
+}
+
+export const logout=()=>async(dispatch)=>{
+ 
+    try {
+    
+        const response=await axios.get("http://localhost:4000/api/user/logout",{withCredentials:true
+                }   
+        );
+       dispatch(userSlice.actions.logoutSuccess());
+       dispatch(userSlice.actions.clearAllErrors());
+    
+        
+    } catch (error) {
+        
+        dispatch(userSlice.actions.logoutFailure(error.response.data.message));
+        
+    }
+    
+    }
 
 export const clearAllUserErrors=()=>(dispatch)=>{
 dispatch(userSlice.actions.clearAllErrors());
