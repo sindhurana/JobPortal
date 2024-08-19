@@ -127,7 +127,7 @@ export default function Jobs() {
                                                 <p>Salary:Rs{element.salary}</p>
                                                 <p>Posted On:{element.jobPostedOn.substring(0, 10)}</p>
                                                 <div className="btn-wrapper">
-                                                    <Link to={`/application/post/${element._id}`}>Apply Now</Link>
+                                                    <Link to={`/post/application/${element._id}`}>Apply Now</Link>
                                                 </div>
                                             </div>
                                         )

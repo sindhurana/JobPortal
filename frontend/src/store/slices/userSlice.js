@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const userSlice=createSlice({
-    name:"User",
+    name:"user",
     initialState:{
         loading:false,
         isAuthenticated:false,
@@ -122,6 +122,9 @@ try {
         }
     }   
     );
+    
+    
+//   console.log("response",response);
    dispatch(userSlice.actions.loginSuccess(response.data));
    dispatch(userSlice.actions.clearAllErrors());
 
@@ -140,7 +143,8 @@ try {
     const response=await axios.get("http://localhost:4000/api/user/getUser",{withCredentials:true,
             }   
     );
-   dispatch(userSlice.actions.fetchUserSuccess(response.data));
+    // console.log("respnse",response)
+   dispatch(userSlice.actions.fetchUserSuccess(response.data.user));
    dispatch(userSlice.actions.clearAllErrors());
 
     

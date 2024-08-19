@@ -194,7 +194,7 @@ export const updatePassword=catchAsyncErrors(async(req,res,next)=>{
         return next (new ErrorHandler("New password & confirm password does not match.",400));
     }
 
-    user.password=req.body.newPassword;
+    user.password = await bcrypt.hash(req.body.newPassword, 12);
     await user.save();
     sendToken(user,200,res,"Password updated succesfully")
 
